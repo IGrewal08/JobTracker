@@ -6,7 +6,6 @@ import type { Job } from "../../types";
 
 type Props = {
   jobs: Job[];
-  token: string;
   onSave: (formData: FormData, jobId: string) => void;
   onDelete: (jobId: string) => void;
 };

@@ -7,7 +7,7 @@ const jobQueue = new Queue("jobqueue", {
     }
 });
 
-export async function initQuery() {
+export async function initQueue() {
     await jobQueue.upsertJobScheduler(
         "daily-trigger",
         {

@@ -5,6 +5,7 @@ import type { Job } from "../types";
 import { JobFilters, type FilterValues } from "../components/Board/JobFilters";
 import { useState } from "react";
 import { requireToken } from "../services/session";
+import { useSocket } from "../hooks/useSocket";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const token = await requireToken(request);
@@ -20,8 +21,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function JobsPage() {
     const { jobs: initial, companies, locations, tags, token } = useLoaderData<typeof loader>();
-
     const [jobs, setJobs] = useState<Job[]>(initial);
+
+    useSocket({
+        token,
+        onNewJob: (job) => setJobs(prev => [job, ...prev]),
+    });
 
     const handleFilterSubmit = async (filters: FilterValues) => {
         try {
@@ -44,6 +49,30 @@ export default function JobsPage() {
         }
     };
 
+    const handleSave = async (formData: FormData, jobId: string) => {
+        try {
+        await authFetch("/api/applications", token, {
+            method: "POST",
+            body: JSON.stringify({
+            jobId,
+            status:      formData.get("status")      || "SAVED",
+            appliedAt:   formData.get("appliedAt")   || undefined,
+            interviewAt: formData.get("interviewAt") || undefined,
+            offerAmount: formData.get("offerAmount") || undefined,
+            notes:       formData.get("notes")       || undefined,
+            coverLetter: formData.get("coverLetter") || undefined,
+            }),
+        });
+        } catch (err: any) {
+        console.error("Save failed:", err.message);
+        }
+    };
+
+    const handleDelete = (jobId: string) => {
+        setJobs(prev => prev.filter(j => j.id !== jobId));
+    };
+
+
     return (
         <div>
             <JobFilters 
@@ -52,7 +81,11 @@ export default function JobsPage() {
                 tags={tags} 
                 onSubmit={handleFilterSubmit} 
             />
-            <JobList jobs={jobs} token={token} />
+            <JobList 
+                jobs={jobs} 
+                onSave={handleSave}
+                onDelete={handleDelete}
+            />
         </div>
     );
 }

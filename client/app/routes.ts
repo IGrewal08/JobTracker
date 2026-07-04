@@ -9,5 +9,6 @@ export default [
         route("/board", "routes/board.tsx"),
         route("/jobs", "routes/jobs.tsx"),
         route("/dashboard", "routes/dashboard.tsx"),
+        route("/settings", "routes/settings.tsx"),
     ]),
 ] satisfies RouteConfig;

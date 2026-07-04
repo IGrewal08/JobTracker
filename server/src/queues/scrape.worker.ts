@@ -1,5 +1,6 @@
-import { handleDailyTrigger, handleScrapeJob } from "@/handlers/dailyTrigger.handler.js";
 import { Worker, type Job } from "bullmq";
+import { handleDailyTrigger } from "@/handlers/dailyTrigger.handler.js";
+import { handleScrapeJob } from "@/handlers/scrapeJob.handler.js";
 
 const worker = new Worker(
     "jobqueue",

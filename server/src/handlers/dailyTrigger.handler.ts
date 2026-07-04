@@ -1,6 +1,5 @@
 import { prisma } from "@/config/prisma.js";
 import { sendScrapeRequest } from "@/queues/scrape.queue.js";
-import { jobServices } from "@/services/job.services.js";
 import type { Job } from "bullmq";
 
 const REMOTIVE_BASE_URL = "https://remotive.com/api/remote-jobs";
@@ -51,16 +50,4 @@ function buildPostFetchOptions(filter: {
     if (filter.jobTypes.length) options.push(`jobTypes=${filter.jobTypes.join(",")}`);
 
     return options;
-}
-
-
-
-export async function handleScrapeJob(job: Job<{ scrapeId: string, targetUrl: string, options?: string[] }>) {
-    const { scrapeId, targetUrl, options } = job.data;
-    const listings = await fetchListings(targetUrl, options);
-
-    for (const listing of listings) {
-        if (await isDuplicate(listing)) continue;
-        const newJob = await jobServices.create(listing);
-    }
 }

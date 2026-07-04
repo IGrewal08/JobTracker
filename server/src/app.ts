@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { errorHandler } from "./middleware/errorHandler.js";
 
-const app: Application = express();
+export const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
