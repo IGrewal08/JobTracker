@@ -15,7 +15,6 @@ export function JobList({ jobs, onSave, onDelete }: Props) {
 
   return (
     <div className={styles.splitLayout}>
-
       <div className={styles.listColumn}>
         {jobs.map(job => (
           <div

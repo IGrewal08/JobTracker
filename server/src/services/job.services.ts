@@ -93,10 +93,10 @@ export const jobServices = {
     ) => {
         return prisma.job.update({
             where: {
-                id
+                id,
             },
             data
-        })
+        });
     },
 
     delete: async (id: number) => {

@@ -24,7 +24,7 @@ export default function StatsChart({ applications }: Props) {
     <div className={styles.main}>
       <div className={styles.pageHeader}>
         <div>
-          <h1 className={styles.pageTitle}>Dashboard</h1>
+          <h1 className={styles.pageTitle}>DASHBOARD</h1>
           <p className={styles.pageSubtitle}>Track and analyze your job search progress.</p>
         </div>
       </div>

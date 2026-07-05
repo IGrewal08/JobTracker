@@ -3,22 +3,35 @@ import styles from "../styles/Header.module.css";
 
 const paths = ["dashboard", "board", "jobs"];
 
-export default function Header() {
+export default function Header({ user }: any) {
     const location = useLocation();
-    console.log((location.pathname).slice(1));
+
     return (
         <header id={styles.header}>
             <h5>JobTracker</h5>
+            {(user) ?
+                <p
+                    style={{ 
+                        alignSelf: "center", 
+                        color: "#1F4A30",
+                        fontSize: "18px"
+                    }}
+                >
+                    Hello {user.toUpperCase()}!
+                </p>
+                : <p>Welcome GUEST!</p>
+            }
             <p>MENU</p>
             {(paths.map(path => (
-                <NavLink 
+                <NavLink
+                    key={path}
                     to={path}
                     className={styles.links}
                     style={{
                         ...((location.pathname.slice(1) === path) 
                         && { 
                             color: "#F4F3EF",
-                            background: "linear-gradient(90deg,rgba(31, 74, 48, 1) 0%, rgba(244, 243, 239, 1) 90%)",
+                            background: "linear-gradient(90deg, #1F4A30 0%, #F4F3EF 90%)",
                             
                         }),
                     }}

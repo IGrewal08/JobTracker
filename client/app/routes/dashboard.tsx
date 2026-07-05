@@ -7,7 +7,7 @@ import styles from "../styles/Dashboard.module.css";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const token = await requireToken(request);
-    let applications: Application[] = await authFetch<Application[]>("/api/applications", token);
+    const applications: Application[] = await authFetch<Application[]>("/api/applications", token);
 
     return { applications };
 }

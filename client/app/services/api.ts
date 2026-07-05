@@ -18,6 +18,6 @@ export async function authFetch<T = any>(
         const body = await res.json().catch(() => ({}));
         throw new Error(body.message ?? `Request failed (${res.status})`);
     }
-
+    
     return res.json() as Promise<T>;
 }

@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction, Response } from "express";
 import { applicationService, parseStatus } from "../services/application.services.js";
 import type { AuthReq } from "../middleware/auth.js";
 

@@ -37,3 +37,12 @@
     color: #1F4A30;
     transform: scale(1.1);
 }
+
+.navLink {
+  color: #7A7972;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+}

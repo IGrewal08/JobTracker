@@ -2,6 +2,7 @@ import type { Application } from "express";
 import express from "express";
 import { authRouter } from "./routes/auth.routes.js";
 import { applicationRouter } from "./routes/application.routes.js";
+import { userRouter } from "./routes/user.routes.js";
 import { jobRouter } from "./routes/job.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -18,6 +19,7 @@ app.use(cors({
 }));
 
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 app.use('/api/applications', applicationRouter);
 app.use('/api/jobs', jobRouter);
 
