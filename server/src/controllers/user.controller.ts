@@ -1,6 +1,15 @@
+import { redis } from "@/config/redis.js";
 import type { AuthReq } from "../middleware/auth.js";
 import { userServices } from "../services/user.services.js";
 import type { NextFunction, Response } from "express";
+import jwt from "jsonwebtoken";
+
+const COOKIE_OPTIONS = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: 'strict' as const,
+    maxAge: 90 * 90 * 100,
+};
 
 export const userController = {
 
@@ -8,7 +17,7 @@ export const userController = {
         try {
             const userName = req.user?.name;
             if (!userName) return res.status(401).json({ message: "Unauthorized." });
-            return res.status(200).json(userName);
+            return res.status(200).json({ name: userName });
         } catch (err) {
             next(err);
         }
@@ -35,11 +44,24 @@ export const userController = {
             const userId = req.user?.id;
             if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
+            const token = req.cookies.token;
+            if (token) {
+                const decoded = jwt.decode(token) as { exp?: number } | null;
+                if (decoded?.exp) {
+                    const secondsUntilExpiry = decoded.exp - Math.floor(Date.now() / 1000);
+                    if (secondsUntilExpiry > 0) {
+                        await redis.set(`denylist:${token}`, "1", "EX", secondsUntilExpiry);
+                    }
+                }
+            }
             await userServices.delete(userId);
 
-            return res.status(200).json({ message: "Deleted account successfully!" });
-        } catch {
+            return res.clearCookie("token", COOKIE_OPTIONS)
+                .status(200)
+                .json({ message: "Account deleted successfully." });
 
+        } catch (err) {
+            next(err);
         }
     },
 };

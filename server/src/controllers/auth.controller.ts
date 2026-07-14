@@ -4,6 +4,7 @@ import type { NextFunction, Request, Response } from "express";
 import { getUser } from "../services/auth.services.js";
 import { prisma } from "../config/prisma.js";
 import type { AuthReq } from "../middleware/auth.js";
+import { redis } from "@/config/redis.js";
 
 const COOKIE_OPTIONS = {
     httpOnly: true,
@@ -85,7 +86,18 @@ export const authController = {
 
     logoutController: async (req: AuthReq<{ id: string }>, res: Response, next: NextFunction) => {
         try {
-            // Implement for Redis
+            const token = req.cookies.token;
+
+            if (token) {
+                const decoded = jwt.decode(token) as { exp?: number } | null;
+                if (decoded?.exp) {
+                    const secondsUntilExpiry = decoded.exp - Math.floor(Date.now() / 1000);
+                    if (secondsUntilExpiry > 0) {
+                        await redis.set(`denylist:${token}`, "1", "EX", secondsUntilExpiry);
+                    }
+                }
+            }
+
             return res.clearCookie("token", COOKIE_OPTIONS)
                 .status(200).json({ message: "Logged out successfully." });
         } catch (err) {

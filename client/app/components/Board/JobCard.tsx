@@ -7,7 +7,7 @@ type Props = { data: Job; onSave: (data: FormData, jobId: string) => void; onDel
 export function JobCard({ data, onSave, onDelete }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave(new FormData(e.currentTarget), data.id);
     setIsOpen(false);
@@ -70,7 +70,6 @@ export function JobCard({ data, onSave, onDelete }: Props) {
                   </label>
                 ))}
               </fieldset>
-
               <div className={styles.formField}>
                 <label className={styles.formLabel} htmlFor="appliedAt">Applied At</label>
                 <input className={styles.formInput} type="date" id="appliedAt" name="appliedAt" />
@@ -91,7 +90,6 @@ export function JobCard({ data, onSave, onDelete }: Props) {
                 <label className={styles.formLabel} htmlFor="coverLetter">Cover Letter</label>
                 <textarea className={styles.formTextarea} id="coverLetter" name="coverLetter" maxLength={600} />
               </div>
-
               <button type="submit" className={styles.modalSubmit}>Save</button>
             </form>
           </div>

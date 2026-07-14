@@ -96,7 +96,7 @@ export default function KanbanBoard({ applications, token }: Props) {
       <div className={styles.boardHeader}>
         <div>
           <h1 className={styles.boardTitle}>APPLICATIONS</h1>
-          <p className={styles.boardSubtitle}>Drag a card to update its status.</p>
+          <p className={styles.boardSubtitle}>Drag a Card to Update its Status.</p>
         </div>
       </div>
 

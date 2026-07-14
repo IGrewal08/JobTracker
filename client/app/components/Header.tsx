@@ -12,12 +12,11 @@ export default function Header({ user }: any) {
             {(user) ?
                 <p
                     style={{ 
-                        alignSelf: "center", 
                         color: "#1F4A30",
-                        fontSize: "18px"
+                        fontSize: "20px"
                     }}
                 >
-                    Hello {user.toUpperCase()}!
+                    Hello {user}!
                 </p>
                 : <p>Welcome GUEST!</p>
             }

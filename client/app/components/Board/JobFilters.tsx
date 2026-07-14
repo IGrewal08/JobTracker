@@ -22,7 +22,7 @@ export function JobFilters({ companies, locations, tags, onSubmit }: Props) {
   const [locationSearch, setLocationSearch] = useState("");
   const [tagSearch, setTagSearch] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     onSubmit({
