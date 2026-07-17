@@ -11,14 +11,7 @@ export default function Root() {
             <head>
                 <Meta /><Links />
             </head>
-            <body 
-                id={styles.body}
-                style={{
-                    minHeight: "100dvh",
-                    flexDirection: "column",
-                    overflowX: "hidden",
-                }}
-            >
+            <body id={styles.body}>
                 <Outlet />
                 <Scripts />
             </body>

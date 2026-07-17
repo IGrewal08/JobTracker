@@ -10,9 +10,12 @@ import {
 import { StatCard } from "./StatCard";
 import type { Application } from "../../types";
 
-type Props = { applications: Application[] };
+type Props = { 
+  applications: Application[],
+  byWeek: any,
+};
 
-export default function StatsChart({ applications }: Props) {
+export default function StatsChart({ applications, byWeek }: Props) {
   const total       = applications.length;
   const totalApplied = applications.filter(a => a.status !== "SAVED").length;
   const gotResponse  = applications.filter(a =>
@@ -44,7 +47,7 @@ export default function StatsChart({ applications }: Props) {
 
         <div className={`${styles.card} ${styles.barCard}`}>
           <h2 className={styles.cardTitle}>Applications over time</h2>
-          <AppsOverTime applications={applications} />
+          <AppsOverTime byWeek={byWeek} />
         </div>
 
         <div className={`${styles.card} ${styles.rateCard}`}>
@@ -71,7 +74,7 @@ const STATUS_COLORS: Record<string, string> = {
   OFFER: "#639922", REJECTED: "#D85A30", WITHDRAWN: "#888780",
 };
 
-function AppsStatus({ applications }: Props) {
+function AppsStatus({ applications }: { applications: Props["applications"]}) {
   const counts = applications.reduce<Record<string, number>>((acc, app) => {
     acc[app.status] = (acc[app.status] ?? 0) + 1;
     return acc;
@@ -102,18 +105,7 @@ function AppsStatus({ applications }: Props) {
   );
 }
 
-function AppsOverTime({ applications }: Props) {
-  const byWeek = Array.from({ length: 8 }, (_, i) => {
-    const start = new Date(Date.now() - (7 - i) * 7 * 86400000);
-    const end   = new Date(Date.now() - (6 - i) * 7 * 86400000);
-    return {
-      week: start.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-      count: applications.filter(a => {
-        const d = new Date(a.createdAt);
-        return d >= start && d < end;
-      }).length,
-    };
-  });
+function AppsOverTime({ byWeek }: { byWeek: Props['byWeek']}) {
 
   return (
     <ResponsiveContainer width="100%" height={300}>
@@ -128,7 +120,7 @@ function AppsOverTime({ applications }: Props) {
   );
 }
 
-function ResponseRate({ applications }: Props) {
+function ResponseRate({ applications }: { applications: Props['applications']}) {
   const total     = applications.filter(a => a.status !== "SAVED").length;
   const responded = applications.filter(a =>
     ["INTERVIEWING", "OFFER", "REJECTED"].includes(a.status)
@@ -160,7 +152,7 @@ function ResponseRate({ applications }: Props) {
   );
 }
 
-function StageConversion({ applications }: Props) {
+function StageConversion({ applications }: { applications: Props['applications']}) {
   const data = [
     { stage: "Applied", count: applications.filter(a => a.status !== "SAVED").length, fill: "#1F4A30" },
     { stage: "Interviewing", count: applications.filter(a => ["INTERVIEWING", "OFFER"].includes(a.status)).length, fill: "#3E7A52" },
@@ -179,7 +171,7 @@ function StageConversion({ applications }: Props) {
   );
 }
 
-function TimeToRespond({ applications }: Props) {
+function TimeToRespond({ applications }: { applications: Props['applications']}) {
   const withBoth = applications.filter(a => a.appliedAt && a.interviewAt);
   const data = withBoth.map(a => ({
     company: a.job?.company ?? "Unknown",

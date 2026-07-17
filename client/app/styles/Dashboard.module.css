@@ -6,14 +6,14 @@
   padding: 1.5rem;
   background-color: #F4F3EF;
   border-radius: 1.5rem;
-}
+};
 
 .pageHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 1.5rem;
-}
+};
 
 .pageTitle {
   font-size: 32px;

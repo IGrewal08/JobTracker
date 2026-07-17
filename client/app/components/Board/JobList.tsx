@@ -37,7 +37,7 @@ export function JobList({ jobs, onSave, onDelete }: Props) {
                 ))}
               </div>
             </div>
-            <span className={styles.jobTimeAgo}>{formatTimeAgo(job.createdAt)}</span>
+            <span className={styles.jobTimeAgo} suppressHydrationWarning={true}>{formatTimeAgo(job.createdAt)}</span>
           </div>
         ))}
       </div>

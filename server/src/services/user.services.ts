@@ -1,9 +1,19 @@
 import { prisma } from "../config/prisma.js";
 
 export const userServices = {
-    
+
+    getName: async (id: string) => {
+        return prisma.user.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                name: true,
+            }
+        });
+    },
     update: async (id: string, userName: string) => {
-        prisma.user.update({
+        await prisma.user.update({
             where: {
                 id,
             },
@@ -12,9 +22,8 @@ export const userServices = {
             }
         });
     },
-
     delete: async (id: string) => {
-        prisma.user.delete({
+        await prisma.user.delete({
             where: {
                 id
             }

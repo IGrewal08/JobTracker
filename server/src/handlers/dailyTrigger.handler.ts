@@ -1,4 +1,4 @@
-import { prisma } from "@/config/prisma.js";
+import { prisma } from "../config/prisma.js";
 import { sendScrapeRequest } from "@/queues/scrape.queue.js";
 import type { Job } from "bullmq";
 

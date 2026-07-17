@@ -4,4 +4,10 @@
     grid-template-columns: 1fr 6fr;
     grid-template-rows: 8fr 1fr;
     gap: 0;
+    flex-direction: column;
+    overflow-x: hidden,
+}
+
+body {
+    min-height: 100dvh;
 }

@@ -39,3 +39,7 @@ export type Job = {
     expiresAt: string | undefined;
     tags: string[];
 }
+
+export type User = {
+    name: string | null;
+}

@@ -1,37 +1,21 @@
 import styles from "../../styles/Setting.module.css"
-import { authFetch } from "../../services/api";
-import { useNavigate } from "react-router";
+import { useSubmit, useActionData } from "react-router";
 import { useState } from "react";
+import type { action } from "../../routes/settings";
+import type { User } from "../../types";
 
-export function Setting(Props: { name: string, token: string }) {
-    const [newName, setNewName] = useState(Props.name);
-    const navigate = useNavigate();
+export function Setting({name}: User) {
+    const [newName, setNewName] = useState(name);
+    const submit = useSubmit();
+    const actionData = useActionData<typeof action>();
 
-    const handleDelete = async () => {
-        const res = confirm("click OK to delete your account");
-        if (res) {
-            try {
-                await authFetch("/api/user", Props.token, { method: "DELETE" });
-                navigate("/login");
-            } catch (err: any) {
-                console.error("Failed to delete account:", err.message);
-            }
+
+    const handleDelete = () => {
+        const confirmDelete = confirm("click OK to delete your account");
+        if (confirmDelete) {
+            submit({ intent: "delete-account" }, { method: "post" });
         }
-    }
-
-    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            authFetch("/api/user", Props.token, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ newName }),
-            });
-            navigate("/dashboard");
-        } catch (err) {
-            console.error("Failed to update name:", err);
-        }
-    }
+    };
 
     return (
         <div className={styles.container}>
@@ -41,15 +25,30 @@ export function Setting(Props: { name: string, token: string }) {
                     <p className={styles.pageSubtitle}>Update Account Information.</p>
                 </div>
             </div>
+
+            {actionData?.error && (
+                <div className={styles.errorAlert}>{actionData.error}</div>
+            )}
+
             <div className={styles.options}>
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <label>Update Name</label>
-                    <input placeholder={newName} onChange={(e) => setNewName(e.target.value)}/>
-                    <button type="submit">Change</button>
+                <form className={styles.form} method="post">
+                    <label htmlFor="newName">Update Name</label>
+                    <input 
+                        id="newName"
+                        name="newName"
+                        value={newName} 
+                        onChange={(e) => setNewName(e.target.value)}
+                    />
+                    <button type="submit" name="intent" value="update-name">
+                        Change
+                    </button>
                 </form>
+
                 <div className={styles.deleteContainer}>
                     <p>Warning! This will permanently delete your account.</p>
-                    <button onClick={() => handleDelete()}>Delete Account</button>
+                    <button type="button" onClick={() => handleDelete()}>
+                        Delete Account
+                    </button>
                 </div>
             </div>
         </div>

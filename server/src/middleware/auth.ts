@@ -1,4 +1,4 @@
-import { redis } from "@/config/redis.js";
+import { redis } from "../config/redis.js";
 import type { Request, NextFunction, Response } from "express";
 import type * as core from "express-serve-static-core";
 import jwt from "jsonwebtoken";

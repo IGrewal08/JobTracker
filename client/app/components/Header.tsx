@@ -1,22 +1,23 @@
 import { NavLink, useLocation } from "react-router";
 import styles from "../styles/Header.module.css";
+import type { User } from "../types";
 
 const paths = ["dashboard", "board", "jobs"];
 
-export default function Header({ user }: any) {
+export default function Header({ name }: User) {
     const location = useLocation();
 
     return (
         <header id={styles.header}>
             <h5>JobTracker</h5>
-            {(user) ?
+            {(name) ?
                 <p
                     style={{ 
                         color: "#1F4A30",
                         fontSize: "20px"
                     }}
                 >
-                    Hello {user}!
+                    Hello {name}!
                 </p>
                 : <p>Welcome GUEST!</p>
             }

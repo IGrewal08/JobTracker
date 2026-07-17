@@ -1,14 +1,9 @@
 import { redirect } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
+import { getTokenFromRequest } from "../services/session";
 
-const isBrowser = typeof window !== "undefined";
-
-export async function loader() {
-    const user = await getUser();
-    if (user) return redirect("/board");
-    return redirect("/login");
-}
-
-function getUser() {
-    if (!isBrowser) return null;
-    return localStorage.getItem("token");
+export async function loader({ request }: LoaderFunctionArgs) {
+  const token = getTokenFromRequest(request);
+  if (token) throw redirect("/board");
+  throw redirect("/login");
 }

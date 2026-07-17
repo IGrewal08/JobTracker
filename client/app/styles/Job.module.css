@@ -1,4 +1,3 @@
-
 .page {
     background-color: #F4F3EF;
     border-radius: 1.5rem;
@@ -136,7 +135,7 @@
   font-weight: 600;
   color: #9A998F;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.04px;
 }
 
 .select, .numberInput {
@@ -311,9 +310,24 @@
   margin-bottom: 1.5rem;
 }
 
-.detailStat { display: flex; flex-direction: column; gap: 2px; }
-.detailStatLabel { font-size: 11px; color: #9A998F; text-transform: uppercase; letter-spacing: 0.04em; }
-.detailStatValue { font-size: 14px; font-weight: 600; color: #1A1A18; }
+.detailStat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detailStatLabel {
+  font-size: 11px;
+  color: #9A998F;
+  text-transform: uppercase;
+  letter-spacing: 0.04px;
+}
+
+.detailStatValue { 
+  font-size: 14px; 
+  font-weight: 600; 
+  color: #1A1A18; 
+}
 
 .saveBtn {
   background-color: #1F4A30;
@@ -334,7 +348,9 @@
   font-size: 13px;
   cursor: pointer;
 }
-.removeBtn:hover { color: #791F1F; }
+.removeBtn:hover { 
+  color: #791F1F; 
+}
 
 .modalOverlay {
   position: fixed; inset: 0;
@@ -352,7 +368,12 @@
   overflow-y: auto;
 }
 
-.modalTitle { font-size: 18px; font-weight: 600; margin: 0 0 1rem; }
+.modalTitle { 
+  font-size: 18px; 
+  font-weight: 600; 
+  margin: 0 0 1rem; 
+}
+
 .modalClose { background: none; border: none; color: #9A998F; font-size: 13px; cursor: pointer; float: right; }
 
 .fieldset { border: none; padding: 0; margin: 0 0 1rem; }

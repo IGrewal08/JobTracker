@@ -27,7 +27,6 @@ export function useSocket({ token, onNewJob }: UseSocketOptions) {
         });
 
         socket.on("new-job", (job: Job) => {
-            // callback function
             onNewJob(job);
         });
 
@@ -35,7 +34,6 @@ export function useSocket({ token, onNewJob }: UseSocketOptions) {
             console.log("[socket.io] Connection error:", err.message);
         });
 
-        // clean up on unmount or token change
         return () => {
             socket.disconnect();
         };

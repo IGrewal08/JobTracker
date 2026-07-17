@@ -3,7 +3,7 @@ import { prisma } from "../config/prisma.js";
 import { jobServices } from "@/services/job.services.js";
 import { hashJob, isDuplicate, markSeen } from "@/services/dedup.services.js";
 import { mapRemotiveJob } from "@/queues/remotive.js";
-import { emitter } from "@/config/socketEmitter.js";
+import { emitter } from "../config/socketEmitter.js";
 
 type ScrapeJobData = { 
     scrapeId: string;

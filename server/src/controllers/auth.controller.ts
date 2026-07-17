@@ -4,7 +4,7 @@ import type { NextFunction, Request, Response } from "express";
 import { getUser } from "../services/auth.services.js";
 import { prisma } from "../config/prisma.js";
 import type { AuthReq } from "../middleware/auth.js";
-import { redis } from "@/config/redis.js";
+import { redis } from "../config/redis.js";
 
 const COOKIE_OPTIONS = {
     httpOnly: true,
