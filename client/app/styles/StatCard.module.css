@@ -8,7 +8,7 @@
   flex-direction: column;
   text-align: left;
   gap: 6px;
-  background-color: #FFFFFF;
+  background-color: var(--board-card-color);
   transition: transform 0.25s ease;
 }
 
@@ -17,18 +17,18 @@
 }
 
 .card.accent {
-  background-color: #1F4A30;
+  background-color: var(--secondary-color-theme);
 }
 
 .label {
   margin: 0;
   font-size: 13px;
   font-weight: 500;
-  color: #7A7972;
+  color: var(--kanban-details-color);
 }
 
 .card.accent .label {
-  color: #BFE0CB;
+  color: #bfe0cb;
 }
 
 .value {
@@ -36,19 +36,19 @@
   font-size: 36px;
   font-weight: 600;
   line-height: 1.1;
-  color: #1A1A18;
+  color: var(--button-font-color);
 }
 
 .card.accent .value {
-  color: #FFFFFF;
+  color: var(--background-color-theme);
 }
 
 .sub {
   margin: 0;
   font-size: 12px;
-  color: #9A998F;
+  color: var(--kanban-details-color);
 }
 
 .card.accent .sub {
-  color: #9FCBAB;
+  color: #9fcbab;
 }

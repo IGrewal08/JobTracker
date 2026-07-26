@@ -1,7 +1,7 @@
-import { prisma } from "../config/prisma.js";
+import { prisma } from '../config/prisma.js';
 
 export const getUser = async (email: string) => {
-    return await prisma.user.findUnique({
-        where: { email }
-    });
-}
+  return await prisma.user.findUnique({
+    where: { email },
+  });
+};

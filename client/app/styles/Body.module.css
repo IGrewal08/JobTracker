@@ -1,13 +1,102 @@
-#body {
-    display: grid;
-    padding: 0;
-    grid-template-columns: 1fr 6fr;
-    grid-template-rows: 8fr 1fr;
-    gap: 0;
-    flex-direction: column;
-    overflow-x: hidden,
+:root {
+  --background-color-theme: #ffffff;
+  --secondary-color-theme: #1f4a30;
+  --component-color-theme: #f4f3ef;
+  --header-divider-color: #979797;
+  --title-color-theme: #1a1a18;
+  --kanban-details-color: #7a7972;
+  --kanban-remove-color: #b4b2a9;
+  --kanban-remove-hover: #791f1f;
+  --card-color: #e8e6df;
+  --board-card-color: #ffffff;
+  --button-hover-color: #0b5328;
+  --button-font-color: #111111;
+  --description-color: #4a4943;
+  --track-color: #e2e8f0;
+  --thumb-color: #ffffff;
+  color: #111111;
+}
+
+[data-theme='dark'] {
+  --background-color-theme: #121212;
+  --secondary-color-theme: #4da972;
+  --component-color-theme: #1e1e1e;
+  --header-divider-color: #979797;
+  --title-color-theme: #1a1a18;
+  --kanban-details-color: #7a7972;
+  --kanban-remove-color: #b4b2a9;
+  --kanban-remove-hover: #791f1f;
+  --card-color: #2a2a2a;
+  --board-card-color: #222222;
+  --button-hover-color: #0e6330;
+  --button-font-color: #ffffff;
+  --description-color: #dcdcdc;
+  --track-color: #222222;
+  --thumb-color: #1a1a18;
+  color: #ffffff;
+}
+
+html,
+body {
+  background-color: #ffffff;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+html[data-theme='dark'],
+html[data-theme='dark'] body {
+  background-color: #121212;
+  color: #ffffff;
 }
 
 body {
-    min-height: 100dvh;
+  min-height: 100dvh;
+  display: grid;
+  padding: 0;
+  grid-template-columns: 1fr 6fr;
+  grid-template-rows: 8fr auto;
+  gap: 0;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.toggleTrack {
+  width: 4rem;
+  height: 1.5rem;
+  background-color: var(--track-color);
+  border-radius: 9999px;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.25s ease;
+}
+
+.toggleThumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: var(--thumb-color);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+[data-theme='dark'] .toggleTrack {
+  background-color: var(--secondary-color-theme);
+}
+
+:global [data-theme='dark'] .toggleThumb {
+  transform: translateX(4rem);
+}
+
+.recharts-cartesian-grid line,
+.recharts-cartesian-grid path {
+  letter-spacing: normal !important;
 }

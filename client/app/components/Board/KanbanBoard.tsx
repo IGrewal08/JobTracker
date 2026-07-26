@@ -1,15 +1,29 @@
-import { useEffect, useState } from "react";
-import type { DragEvent } from "react";
-import { KanbanColumn } from "./KanbanColumn";
-import styles from "../../styles/Kanban.module.css";
-import type { Application, Columns, DraggedObject } from "../../types";
-import { authFetch } from "../../services/api";
+import { useEffect, useState } from 'react';
+import type { DragEvent } from 'react';
+import { KanbanColumn } from './KanbanColumn';
+import styles from '../../styles/Kanban.module.css';
+import type { Application, Columns, DraggedObject } from '../../types';
+import { authFetch } from '../../services/api';
 
-const COLUMN_KEYS = ["saved", "applied", "interviewing", "offers", "rejected", "withdrawn"];
+const COLUMN_KEYS = [
+  'saved',
+  'applied',
+  'interviewing',
+  'offers',
+  'rejected',
+  'withdrawn',
+];
 
 const buildInitialColumns = (): Columns =>
   Object.fromEntries(
-    COLUMN_KEYS.map(key => [key, { id: key, title: key.charAt(0).toUpperCase() + key.slice(1), applications: [] }])
+    COLUMN_KEYS.map((key) => [
+      key,
+      {
+        id: key,
+        title: key.charAt(0).toUpperCase() + key.slice(1),
+        applications: [],
+      },
+    ]),
   );
 
 type Props = { applications: Application[]; token: string };
@@ -19,19 +33,27 @@ export default function KanbanBoard({ applications, token }: Props) {
   const [draggedItem, setDraggedItem] = useState<DraggedObject | null>(null);
 
   useEffect(() => {
-    const grouped: Record<string, Application[]> = Object.fromEntries(COLUMN_KEYS.map(k => [k, []]));
-    applications.forEach(app => {
+    const grouped: Record<string, Application[]> = Object.fromEntries(
+      COLUMN_KEYS.map((k) => [k, []]),
+    );
+    applications.forEach((app) => {
       const key = app.status.toLowerCase();
       if (grouped[key]) grouped[key].push(app);
     });
-    setColumns(prev => {
+    setColumns((prev) => {
       const next = { ...prev };
-      COLUMN_KEYS.forEach(key => { next[key] = { ...next[key], applications: grouped[key] }; });
+      COLUMN_KEYS.forEach((key) => {
+        next[key] = { ...next[key], applications: grouped[key] };
+      });
       return next;
     });
   }, [applications]);
 
-  const handleDragStart = (_e: DragEvent<HTMLLIElement>, id: string, columnId: string) => {
+  const handleDragStart = (
+    _e: DragEvent<HTMLLIElement>,
+    id: string,
+    columnId: string,
+  ) => {
     setDraggedItem({ id, columnId });
   };
 
@@ -39,7 +61,10 @@ export default function KanbanBoard({ applications, token }: Props) {
     e.preventDefault();
   };
 
-  const handleDrop = async (e: DragEvent<HTMLDivElement>, targetColumnId: string) => {
+  const handleDrop = async (
+    e: DragEvent<HTMLDivElement>,
+    targetColumnId: string,
+  ) => {
     e.preventDefault();
 
     if (!draggedItem || draggedItem.columnId === targetColumnId) {
@@ -48,46 +73,60 @@ export default function KanbanBoard({ applications, token }: Props) {
     }
 
     const { id, columnId: sourceColumnId } = draggedItem;
-    const movedApp = columns[sourceColumnId]?.applications.find(app => app.id === id);
-    if (!movedApp) { setDraggedItem(null); return; }
+    const movedApp = columns[sourceColumnId]?.applications.find(
+      (app) => app.id === id,
+    );
+    if (!movedApp) {
+      setDraggedItem(null);
+      return;
+    }
 
-    setColumns(prev => {
+    setColumns((prev) => {
       const next = { ...prev };
       next[sourceColumnId] = {
         ...next[sourceColumnId],
-        applications: next[sourceColumnId].applications.filter(app => app.id !== id),
+        applications: next[sourceColumnId].applications.filter(
+          (app) => app.id !== id,
+        ),
       };
       next[targetColumnId] = {
         ...next[targetColumnId],
-        applications: [...next[targetColumnId].applications, { ...movedApp, status: targetColumnId }],
+        applications: [
+          ...next[targetColumnId].applications,
+          { ...movedApp, status: targetColumnId },
+        ],
       };
       return next;
     });
 
     try {
       await authFetch(`/api/applications/${id}`, token, {
-        method: "PATCH",
+        method: 'PATCH',
         body: JSON.stringify({ status: targetColumnId.toUpperCase() }),
       });
     } catch (err) {
-      console.error("Failed to update status:", err);
+      console.error('Failed to update status:', err);
     }
 
     setDraggedItem(null);
   };
 
   const removeTask = async (columnId: string, taskId: string) => {
-    setColumns(prev => ({
+    setColumns((prev) => ({
       ...prev,
       [columnId]: {
         ...prev[columnId],
-        applications: prev[columnId].applications.filter(app => app.id !== taskId),
+        applications: prev[columnId].applications.filter(
+          (app) => app.id !== taskId,
+        ),
       },
     }));
     try {
-      await authFetch(`/api/applications/${taskId}`, token, { method: "DELETE" });
+      await authFetch(`/api/applications/${taskId}`, token, {
+        method: 'DELETE',
+      });
     } catch (err) {
-      console.error("Failed to delete application:", err);
+      console.error('Failed to delete application:', err);
     }
   };
 
@@ -96,10 +135,11 @@ export default function KanbanBoard({ applications, token }: Props) {
       <div className={styles.boardHeader}>
         <div>
           <h1 className={styles.boardTitle}>APPLICATIONS</h1>
-          <p className={styles.boardSubtitle}>Drag a Card to Update its Status.</p>
+          <p className={styles.boardSubtitle}>
+            Drag a Card to Update its Status.
+          </p>
         </div>
       </div>
-
       <div className={styles.columnRow}>
         {Object.entries(columns).map(([key, column]) => (
           <KanbanColumn

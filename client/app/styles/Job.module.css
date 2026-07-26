@@ -1,18 +1,45 @@
+.jobs {
+  grid-area: 1 / 2 / 2 / 3;
+  background-color: var(--component-color-theme);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  margin: 0.5rem;
+}
+
+.jobsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.jobsTitle {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.jobsSubtitle {
+  font-size: 14px;
+  color: var(--kanban-details-color);
+  margin: 0;
+}
+
 .page {
-    background-color: #F4F3EF;
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    margin: 0.5rem;
+  background-color: var(--component-color-theme);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  margin: 0.5rem;
 }
 
 .searchBar {
-  background-color: #FFFFFF;
+  background-color: var(--board-card-color);
   border-radius: 1.25rem;
   padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   margin-bottom: 1rem;
 }
 
@@ -23,17 +50,18 @@
   font-size: 14px;
   padding: 6px 0;
   background: transparent;
+  color: var(--kanban-details-color);
 }
 
 .searchDivider {
   width: 1px;
   height: 24px;
-  background-color: #E5E3DC;
+  background-color: var(--kanban-remove-color);
 }
 
 .filterBtn {
-  background-color: #1F4A30;
-  color: #FFFFFF;
+  background-color: var(--secondary-color-theme);
+  color: var(--component-color-theme);
   border: none;
   border-radius: 999px;
   padding: 10px 22px;
@@ -43,7 +71,9 @@
   white-space: nowrap;
 }
 
-.filterBtn:hover { background-color: #173B26; }
+.filterBtn:hover {
+  background-color: var(--button-hover-color);
+}
 
 .pillRow {
   display: flex;
@@ -58,13 +88,13 @@
 
 .pillSummary {
   list-style: none;
-  background-color: #FFFFFF;
-  border: 1px solid #E5E3DC;
+  background-color: var(--board-card-color);
+  border: 1px solid var(--component-color-theme);
   border-radius: 999px;
   padding: 9px 16px;
   font-size: 13px;
   font-weight: 500;
-  color: #1A1A18;
+  color: var(--button-font-color);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -72,15 +102,17 @@
   user-select: none;
 }
 
-.pillSummary::-webkit-details-marker { display: none; }
+.pillSummary::-webkit-details-marker {
+  display: none;
+}
 
 .pillPanel {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  background-color: #FFFFFF;
+  background-color: var(--board-card-color);
   border-radius: 1rem;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   padding: 0.75rem;
   min-width: 220px;
   max-height: 280px;
@@ -90,7 +122,7 @@
 
 .pillSearchInput {
   width: 100%;
-  border: 1px solid #E5E3DC;
+  border: 1px solid var(--component-color-theme);
   border-radius: 8px;
   padding: 6px 10px;
   font-size: 13px;
@@ -108,10 +140,12 @@
   cursor: pointer;
 }
 
-.checkRow:hover { background-color: #F4F3EF; }
+.checkRow:hover {
+  background-color: var(--component-color-theme);
+}
 
 .moreFilters {
-  background-color: #FFFFFF;
+  background-color: var(--board-card-color);
   border-radius: 1rem;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
@@ -133,17 +167,20 @@
 .fieldLabel {
   font-size: 11px;
   font-weight: 600;
-  color: #9A998F;
+  color: #9a998f;
   text-transform: uppercase;
   letter-spacing: 0.04px;
 }
 
-.select, .numberInput {
-  border: 1px solid #E5E3DC;
+.select,
+.numberInput {
+  border: 1px solid #e5e3dc;
+  background-color: var(--thumb-color);
   border-radius: 8px;
   padding: 7px 10px;
   font-size: 13px;
   outline: none;
+  color: var(--button-font-color);
 }
 
 .actionsRow {
@@ -154,19 +191,21 @@
 
 .clearBtn {
   background: none;
-  border: 1px solid #E5E3DC;
+  border: 1px solid #e5e3dc;
   border-radius: 999px;
   padding: 9px 18px;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  color: #5F5E5A;
+  color: #5f5e5a;
 }
 
 .splitLayout {
+  padding: 0.5rem;
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+  overflow-y: scroll;
 }
 
 .listColumn {
@@ -183,24 +222,27 @@
 }
 
 .jobCard {
-  background-color: #FFFFFF;
+  background-color: var(--board-card-color);
+  color: var(--kanban-details-color);
   border-radius: 1.25rem;
   padding: 1.1rem 1.25rem;
   display: flex;
   gap: 1rem;
   align-items: flex-start;
   cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
 }
 
 .jobCard:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
   transform: translateY(-1px);
 }
 
 .jobCardSelected {
-  outline: 2px solid #1F4A30;
+  outline: 2px solid var(--secondary-color-theme);
 }
 
 .logoCircle {
@@ -212,28 +254,31 @@
   justify-content: center;
   font-weight: 700;
   font-size: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   flex-shrink: 0;
 }
 
 .jobCardDivider {
   width: 1px;
   align-self: stretch;
-  background-color: #F1EFE8;
+  background-color: #f1efe8;
 }
 
-.jobCardBody { flex: 1; min-width: 0; }
+.jobCardBody {
+  flex: 1;
+  min-width: 0;
+}
 
 .jobTitle {
   font-size: 15px;
   font-weight: 600;
-  color: #1A1A18;
+  color: var(--button-font-color);
   margin: 0 0 4px;
 }
 
 .jobMeta {
   font-size: 13px;
-  color: #7A7972;
+  color: #7a7972;
   margin: 0 0 8px;
 }
 
@@ -246,23 +291,24 @@
 .jobTagChip {
   font-size: 11px;
   font-weight: 500;
-  border: 1px solid #E5E3DC;
+  border: 1px solid var(--thumb-color);
   border-radius: 999px;
   padding: 3px 10px;
-  color: #5F5E5A;
+  color: #5f5e5a;
+  background-color: var(--thumb-color);
 }
 
 .jobTimeAgo {
   font-size: 12px;
-  color: #9A998F;
+  color: #9a998f;
   white-space: nowrap;
 }
 
 .detailCard {
-  background-color: #FFFFFF;
+  background-color: var(--board-card-color);
   border-radius: 1.25rem;
   padding: 1.5rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .detailHeader {
@@ -276,7 +322,7 @@
   font-size: 20px;
   font-weight: 600;
   margin: 0 0 6px;
-  color: #1A1A18;
+  color: var(--button-font-color);
 }
 
 .detailMeta {
@@ -284,23 +330,25 @@
   gap: 10px;
   flex-wrap: wrap;
   font-size: 13px;
-  color: #7A7972;
+  color: #7a7972;
   margin-bottom: 1rem;
 }
 
 .detailLink {
   font-size: 13px;
   font-weight: 600;
-  color: #1F4A30;
+  color: var(--secondary-color-theme);
   text-decoration: none;
   margin-bottom: 1rem;
   display: inline-block;
 }
 
 .detailDescription {
+  overflow-y: scroll;
   font-size: 14px;
   line-height: 1.6;
-  color: #4A4943;
+  max-height: 14rem;
+  color: var(--description-color);
   margin-bottom: 1.25rem;
 }
 
@@ -318,20 +366,20 @@
 
 .detailStatLabel {
   font-size: 11px;
-  color: #9A998F;
+  color: #9a998f;
   text-transform: uppercase;
   letter-spacing: 0.04px;
 }
 
-.detailStatValue { 
-  font-size: 14px; 
-  font-weight: 600; 
-  color: #1A1A18; 
+.detailStatValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--button-font-color);
 }
 
 .saveBtn {
-  background-color: #1F4A30;
-  color: #FFFFFF;
+  background-color: var(--secondary-color-theme);
+  color: var(--thumb-color);
   border: none;
   border-radius: 999px;
   padding: 10px 24px;
@@ -341,26 +389,33 @@
   width: 100%;
 }
 
+.saveBtn:hover {
+  background-color: var(--button-hover-color);
+}
+
 .removeBtn {
   background: none;
   border: none;
-  color: #9A998F;
+  color: #9a998f;
   font-size: 13px;
   cursor: pointer;
 }
-.removeBtn:hover { 
-  color: #791F1F; 
+.removeBtn:hover {
+  color: var(--kanban-remove-hover);
 }
 
 .modalOverlay {
-  position: fixed; inset: 0;
-  background-color: rgba(0,0,0,0.35);
-  display: flex; align-items: center; justify-content: center;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 50;
 }
 
 .modalContent {
-  background-color: #FFFFFF;
+  background-color: var(--component-color-theme);
   border-radius: 1.25rem;
   padding: 1.75rem;
   width: 420px;
@@ -368,25 +423,69 @@
   overflow-y: auto;
 }
 
-.modalTitle { 
-  font-size: 18px; 
-  font-weight: 600; 
-  margin: 0 0 1rem; 
+.modalTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 1rem;
 }
 
-.modalClose { background: none; border: none; color: #9A998F; font-size: 13px; cursor: pointer; float: right; }
+.modalClose {
+  background: none;
+  border: none;
+  color: #9a998f;
+  font-size: 13px;
+  cursor: pointer;
+  float: right;
+}
 
-.fieldset { border: none; padding: 0; margin: 0 0 1rem; }
-.legend { font-size: 12px; font-weight: 600; color: #5F5E5A; margin-bottom: 6px; }
-.radioRow { display: flex; align-items: center; gap: 6px; font-size: 13px; padding: 3px 0; }
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.legend {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5f5e5a;
+  margin-bottom: 6px;
+}
+.radioRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 3px 0;
+}
 
-.formField { display: flex; flex-direction: column; gap: 4px; margin-bottom: 0.85rem; }
-.formLabel { font-size: 12px; font-weight: 600; color: #5F5E5A; }
-.formInput, .formTextarea {
-  border: 1px solid #E5E3DC; border-radius: 8px; padding: 8px 10px; font-size: 13px; outline: none; font-family: inherit;
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 0.85rem;
+}
+.formLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5f5e5a;
+}
+.formInput,
+.formTextarea {
+  border: 1px solid #e5e3dc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
 }
 
 .modalSubmit {
-  background-color: #1F4A30; color: #FFFFFF; border: none; border-radius: 999px;
-  padding: 10px 22px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 0.5rem;
+  background-color: var(--secondary-color-theme);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0.5rem;
 }

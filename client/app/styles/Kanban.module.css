@@ -1,165 +1,167 @@
 .board {
-    grid-area: 1 / 2 / 2 / 3;
-    background-color: #F4F3EF;
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    margin: 0.5rem;
+  grid-area: 1 / 2 / 2 / 3;
+  background-color: var(--component-color-theme);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  margin: 0.5rem;
 }
 
 .boardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
 }
 
 .boardTitle {
-    font-size: 32px;
-    font-weight: 600;
-    margin: 0 0 4px;
-    color: #1A1A18;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 4px;
 }
 
 .boardSubtitle {
-    font-size: 14px;
-    color: #7A7972;
-    margin: 0;
+  font-size: 14px;
+  color: var(--kanban-details-color);
+  margin: 0;
 }
 
 .columnRow {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    overflow-x: auto;
-    flex-wrap: wrap;
-    padding-bottom: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  overflow-x: auto;
+  flex-wrap: wrap;
+  padding: 0.5rem;
 }
 
 .column {
-    background-color: #EAE8E1;
-    border-radius: 1.25rem;
-    padding: 0.85rem;
-    min-width: 280px;
-    flex: 1;
+  background-color: var(--board-card-color);
+  border-radius: 1.25rem;
+  padding: 0.85rem;
+  min-width: 280px;
+  flex: 1;
+  min-height: 12rem;
 }
 
 .columnHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.25rem 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem 0.75rem;
 }
 
 .columnHeaderLeft {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .columnDot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .columnName {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1A1A18;
-    margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--kanban-details-color);
+  margin: 0;
 }
 
 .columnCount {
-    background-color: #FFFFFF;
-    color: #5F5E5A;
-    font-size: 12px;
-    font-weight: 600;
-    min-width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  background-color: #ffffff;
+  color: #5f5e5a;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cardList {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .card {
-    background-color: #FFFFFF;
-    border-radius: 1rem;
-    padding: 0.9rem 1rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    cursor: grab;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--card-color);
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  cursor: grab;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 }
 
 .cardTop {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .pill {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
-    display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-block;
 }
 
 .removeBtn {
-    background: none;
-    border: none;
-    color: #B4B2A9;
-    font-size: 16px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 2px 4px;
+  background: none;
+  border: none;
+  color: #b4b2a9;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 4px;
 }
 
 .removeBtn:hover {
-    color: #791F1F;
+  color: #791f1f;
 }
 
 .cardTitle {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1A1A18
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--button-font-color);
 }
 
 .cardCompany {
-    font-size: 13px;
-    color: #7A7972;
-    margin: 0 0 12px;
+  font-size: 13px;
+  color: #7a7972;
+  margin: 0 0 12px;
 }
 
 .cardDivider {
-    border: none;
-    border-top: 1px solid #F1EFE8;
-    margin: 0 0 10px;
+  border: none;
+  border-top: 1px solid #f1efe8;
+  margin: 0 0 10px;
 }
 
 .cardFooter {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-    color: #9A998F;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #9a998f;
 }
 
 .cardDate {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

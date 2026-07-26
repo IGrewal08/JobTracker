@@ -1,55 +1,52 @@
-import http from "http";
-import { app } from "./app.js";
-import { Redis } from "ioredis";
-import { Server } from "socket.io";
-import jwt from "jsonwebtoken";
-import { createAdapter } from "@socket.io/redis-adapter";
-import { initQueue } from "./queues/scrape.queue.js";
+import http from 'http';
+import { app } from './app.js';
+import { Redis } from 'ioredis';
+import { Server } from 'socket.io';
+import jwt from 'jsonwebtoken';
+import { createAdapter } from '@socket.io/redis-adapter';
+import { initQueue } from './queues/scrape.queue.js';
 
 const httpServer = http.createServer(app);
 
 const pubClient = new Redis({ host: process.env.HOST, port: 6379 });
 const subClient = pubClient.duplicate();
 
-// export for app.ts
 export const io = new Server(httpServer, {
-    cors: {
-        origin: process.env.HOST_URL,
-        credentials: true,
-    },
-    adapter: createAdapter(pubClient, subClient),
+  cors: {
+    origin: process.env.HOST_URL,
+    credentials: true,
+  },
+  adapter: createAdapter(pubClient, subClient),
 });
 
-// middleware (AUTH)
 io.use((socket, next) => {
-    try {
-        const token = socket.handshake.auth.token as string;
-        if (!token) return next(new Error("No token provided."));
+  try {
+    const token = socket.handshake.auth.token as string;
+    if (!token) return next(new Error('No token provided.'));
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string; role: string };
-        socket.data.userId = decoded.id;
-        next();
-    } catch {
-        next(new Error("Invalid token."));
-    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      id: string;
+      role: string;
+    };
+    socket.data.userId = decoded.id;
+    next();
+  } catch {
+    next(new Error('Invalid token.'));
+  }
 });
 
-// Listener
-io.on("connection", (socket) => {
-    const userId = socket.data.userId as string;
+io.on('connection', (socket) => {
+  const userId = socket.data.userId as string;
+  socket.join(userId);
+  console.log(`[socket.io] User ${userId} connected (${socket.id})`);
 
-    // allocate a room for their userId, Let BullMQ worker emit to this room
-    socket.join(userId);
-    console.log(`[socket.io] User ${userId} connected (${socket.id})`);
-
-    socket.on("disconnect", () => {
-        console.log(`[socket.io] User ${userId} disconnected`);
-    });
+  socket.on('disconnect', () => {
+    console.log(`[socket.io] User ${userId} disconnected`);
+  });
 });
-
 
 const PORT = Number(process.env.PORT) || 3000;
-httpServer.listen(PORT, "localhost", async () => {
-    await initQueue();
-    console.log(`Server running on port ${PORT}`);
+httpServer.listen(PORT, 'localhost', async () => {
+  await initQueue();
+  console.log(`Server running on port ${PORT}`);
 });

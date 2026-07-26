@@ -1,5 +1,5 @@
-import { Redis } from "ioredis";
-import { Emitter } from "@socket.io/redis-emitter";
+import { Redis } from 'ioredis';
+import { Emitter } from '@socket.io/redis-emitter';
 
 // custom emits
 const emitterClient = new Redis({ host: process.env.HOST, port: 6379 });

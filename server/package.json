@@ -5,9 +5,10 @@
   "main": "app.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "dev": "nodemon dist/app.js",
-    "start": "node dist/app.js",
+    "dev": "nodemon dist/server.js",
+    "start": "node dist/server.js",
     "dev:worker": "nodemon src/queues/scrape.worker.ts",
+    "test:scrape": "npx tsx src/testScrape.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "prisma": {
