@@ -6,7 +6,7 @@ import { prisma } from '../config/prisma.js';
 import type { AuthReq } from '../middleware/auth.js';
 import { redis } from '../config/redis.js';
 
-const COOKIE_OPTIONS = {
+export const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'strict' as const,
@@ -43,7 +43,7 @@ export const authController = {
         },
         process.env.JWT_SECRET as string,
         {
-          expiresIn: '1h',
+          expiresIn: '15m',
         },
       );
 

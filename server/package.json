@@ -4,10 +4,11 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "build": "rimraf dist && tsc",
-    "dev": "nodemon dist/server.js",
+    "build": "tsc",
+    "dev": "nodemon --exec tsx src/server.ts",
     "start": "node dist/server.js",
-    "dev:worker": "nodemon src/queues/scrape.worker.ts",
+    "dev:worker": "nodemon --exec tsx src/queues/scrape.worker.ts",
+    "start:worker": "node dist/queues/scrape.worker.js",
     "test:scrape": "npx tsx src/testScrape.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -45,6 +46,7 @@
     "@types/node": "^25.9.3",
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
+    "tsx": "^4.23.1",
     "typescript": "^6.0.3"
   }
 }

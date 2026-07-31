@@ -213,12 +213,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 0.5rem;
+  max-height: 35rem;
+  overflow-y: scroll;
 }
 
 .detailColumn {
   flex: 1;
+  padding: 0.5rem;
   position: sticky;
-  top: 1rem;
 }
 
 .jobCard {
@@ -347,7 +350,7 @@
   overflow-y: scroll;
   font-size: 14px;
   line-height: 1.6;
-  max-height: 14rem;
+  max-height: 20rem;
   color: var(--description-color);
   margin-bottom: 1.25rem;
 }

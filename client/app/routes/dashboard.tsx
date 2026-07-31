@@ -26,13 +26,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
         month: 'short',
         day: 'numeric',
       }),
-      count: applications.filter((a: any) => {
+      count: applications.filter((a: Application) => {
         const d = new Date(a.createdAt);
         return d >= start && d < end;
       }).length,
     };
   });
-
   return { applications, byWeek };
 }
 

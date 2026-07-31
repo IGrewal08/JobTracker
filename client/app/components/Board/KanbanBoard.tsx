@@ -9,7 +9,7 @@ const COLUMN_KEYS = [
   'saved',
   'applied',
   'interviewing',
-  'offers',
+  'offer',
   'rejected',
   'withdrawn',
 ];

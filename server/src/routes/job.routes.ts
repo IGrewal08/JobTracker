@@ -6,6 +6,7 @@ export const jobRouter = Router();
 
 jobRouter.get('/id', verifyToken, jobController.getById);
 jobRouter.get('/', verifyToken, jobController.list);
+jobRouter.get('/metadata', verifyToken, jobController.metaData);
 jobRouter.post('/', verifyToken, jobController.create);
 jobRouter.put('/id', verifyToken, jobController.update);
 jobRouter.delete('/id', verifyToken, jobController.remove);

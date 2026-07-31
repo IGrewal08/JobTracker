@@ -2,6 +2,7 @@ import styles from '../../styles/Job.module.css';
 import { getLogoColor } from '../../utils/formatTimeAgo.ts';
 import { JobCard } from './JobCard';
 import type { Job } from '../../types';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   jobs: Job[];
@@ -9,6 +10,9 @@ type Props = {
   setSelectedJob: (selectedJob: Job | null) => void;
   onSave: (formData: FormData, jobId: string) => void;
   onDelete: (jobId: string) => void;
+  hasMore: boolean;
+  isLoadingMore: boolean;
+  onLoadMore: () => void;
 };
 
 export function JobList({
@@ -17,7 +21,38 @@ export function JobList({
   setSelectedJob,
   onSave,
   onDelete,
+  hasMore,
+  isLoadingMore,
+  onLoadMore,
 }: Props) {
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  const loadingRef = useRef(isLoadingMore);
+  useEffect(() => {
+    loadingRef.current = isLoadingMore;
+  }, [isLoadingMore]);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loadingRef.current && hasMore) {
+          onLoadMore();
+        }
+      },
+      {
+        root: sentinel.parentElement,
+        threshold: 0.1,
+      },
+    );
+    observer.observe(sentinel);
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasMore, onLoadMore]);
+
   return (
     <div className={styles.splitLayout}>
       <div className={styles.listColumn}>
@@ -54,6 +89,20 @@ export function JobList({
             <span className={styles.jobTimeAgo}>{job.timeAgo}</span>
           </div>
         ))}
+        {/* Sentinel Element for IntersectionObserver */}
+        <div
+          ref={sentinelRef}
+          className={styles.sentinel}
+        >
+          {isLoadingMore && (
+            <p className={styles.loadingText}>Loading more jobs...</p>
+          )}
+          {!hasMore && jobs.length > 0 && (
+            <p className={styles.endText}>
+              You've reached the end of the list.
+            </p>
+          )}
+        </div>
       </div>
 
       <div className={styles.detailColumn}>

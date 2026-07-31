@@ -45,7 +45,10 @@ export const jobServices = {
     salaryMax?: number;
     postedWithin?: number;
     sort?: string;
+    limit: number;
+    cursor?: string;
   }) => {
+    const limit = filters.limit ?? 10;
     const ORDER_MAP: Record<string, Prisma.JobOrderByWithRelationInput> = {
       newest: { createdAt: Prisma.SortOrder.desc },
       oldest: { createdAt: Prisma.SortOrder.asc },
@@ -53,10 +56,20 @@ export const jobServices = {
       salaryAsc: { salaryMin: Prisma.SortOrder.asc },
     };
 
-    const orderBy = ORDER_MAP[filters.sort ?? 'newest'] ?? ORDER_MAP.newest;
+    const primarySort =
+      ORDER_MAP[filters.sort ?? 'newest'] ?? ORDER_MAP['newest']!;
+
+    const orderBy: Prisma.JobOrderByWithRelationInput[] = [
+      primarySort,
+      { id: 'desc' },
+    ];
 
     const postedAfter = filters.postedWithin
       ? new Date(Date.now() - filters.postedWithin * 86400000)
+      : undefined;
+
+    const cursorObj: Prisma.JobWhereUniqueInput | undefined = filters.cursor
+      ? { id: parseInt(filters.cursor, 10) }
       : undefined;
 
     return prisma.job.findMany({
@@ -80,7 +93,14 @@ export const jobServices = {
         ...(filters.salaryMax && { salaryMax: { lte: filters.salaryMax } }),
         ...(postedAfter && { postedAt: { gte: postedAfter } }),
       },
-      ...(orderBy && { orderBy }),
+      take: limit + 1,
+      ...(cursorObj
+        ? {
+            cursor: cursorObj,
+            skip: 1,
+          }
+        : {}),
+      orderBy,
     });
   },
 

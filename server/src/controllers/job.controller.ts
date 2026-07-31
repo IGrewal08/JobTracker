@@ -2,6 +2,7 @@ import type { NextFunction, Response } from 'express';
 import { jobServices, parseType } from '../services/job.services.js';
 import { JobType } from '@prisma/client';
 import type { AuthReq } from '../middleware/auth.js';
+import { prisma } from '@/config/prisma.js';
 
 export const jobController = {
   getById: async (
@@ -24,8 +25,27 @@ export const jobController = {
     next: NextFunction,
   ) => {
     try {
-      const { search, remote, postedWithin, salaryMin, salaryMax, sort } =
-        req.query;
+      const {
+        search,
+        remote,
+        postedWithin,
+        salaryMin,
+        salaryMax,
+        sort,
+        limit,
+        cursor,
+      } = req.query;
+
+      let refLimit = 10;
+      if (typeof limit === 'string') {
+        const parsed = parseInt(limit, 10);
+        if (!isNaN(parsed) && parsed >= 1) refLimit = Math.min(parsed, 50);
+      }
+
+      let refCursor = undefined;
+      if (typeof cursor === 'string' && cursor.trim().length > 0) {
+        refCursor = cursor.trim();
+      }
 
       const toArray = (v: unknown): string[] => {
         if (Array.isArray(v)) return v as string[];
@@ -40,7 +60,7 @@ export const jobController = {
         .filter((v): v is JobType => v !== undefined);
       const tags = toArray(req.query.tag);
 
-      const jobs = await jobServices.list({
+      const items = await jobServices.list({
         search: typeof search === 'string' ? search : undefined,
         companies: companies.length ? companies : undefined,
         locations: locations.length ? locations : undefined,
@@ -52,9 +72,51 @@ export const jobController = {
         salaryMax: salaryMax ? Number(salaryMax) : undefined,
         postedWithin: postedWithin ? Number(postedWithin) : undefined,
         sort: typeof sort === 'string' ? sort : 'newest',
+        limit: refLimit,
+        cursor: refCursor,
       });
 
-      return res.status(200).json(jobs);
+      let nextCursor: string | number | null = null;
+      let hasMore = false;
+
+      if (items.length > refLimit) {
+        items.pop();
+        hasMore = true;
+        const lastItem = items[items.length - 1];
+        nextCursor = lastItem ? lastItem.id : null;
+      }
+
+      return res.status(200).json({
+        data: items,
+        nextCursor,
+        hasMore: nextCursor !== null,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  metaData: async (req: AuthReq, res: Response, next: NextFunction) => {
+    try {
+      const [companiesRaw, locationsRaw, tagsRaw] = await Promise.all([
+        prisma.job.findMany({
+          select: { company: true },
+          distinct: ['company'],
+        }),
+        prisma.job.findMany({
+          select: { location: true },
+          distinct: ['location'],
+        }),
+        prisma.job.findMany({ select: { tags: true } }),
+      ]);
+
+      const companies = companiesRaw.map((j) => j.company);
+      const locations = locationsRaw
+        .map((j) => j.location)
+        .filter(Boolean) as string[];
+      const tags = [...new Set(tagsRaw.flatMap((j) => j.tags))];
+
+      return res.status(200).json({ companies, locations, tags });
     } catch (err) {
       next(err);
     }

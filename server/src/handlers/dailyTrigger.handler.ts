@@ -1,5 +1,5 @@
 import { prisma } from '../config/prisma.js';
-import { sendScrapeRequest } from '@/queues/scrape.queue.js';
+import { sendScrapeRequest } from '../queues/scrape.queue.js';
 import type { Job } from 'bullmq';
 
 const REMOTIVE_BASE_URL = 'https://remotive.com/api/remote-jobs';

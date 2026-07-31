@@ -3,16 +3,10 @@ import type { AuthReq } from '../middleware/auth.js';
 import { userServices } from '../services/user.services.js';
 import type { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { COOKIE_OPTIONS } from './auth.controller.js';
 
 type Name = {
   newName: string;
-};
-
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
-  maxAge: 90 * 90 * 100,
 };
 
 export const userController = {
