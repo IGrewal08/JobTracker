@@ -119,30 +119,47 @@ function AppsStatus({ applications }: { applications: Props['applications'] }) {
     fill: STATUS_COLORS[name] ?? '#ccc',
   }));
 
+  if (data.length === 0) {
+    return (
+      <div style={{ textAlign: 'center', fontSize: '16px' }}>
+        No applications to view at the moment.
+      </div>
+    );
+  }
+
   return (
-    <ResponsiveContainer
-      width="100%"
-      height={300}
-    >
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          innerRadius={60}
-          outerRadius={110}
-          paddingAngle={3}
-          shape={(props: PieSectorShapeProps) => (
-            <Sector
-              {...props}
-              fill={(props as any).fill}
-            />
-          )}
-        />
-        <Tooltip />
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>
+    <>
+      {applications.length === 0 ? (
+        <div style={{ textAlign: 'center', fontSize: '16px' }}>
+          No Applications To View At This Moment.
+        </div>
+      ) : (
+        <></>
+      )}
+      <ResponsiveContainer
+        width="100%"
+        height={300}
+      >
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={60}
+            outerRadius={110}
+            paddingAngle={3}
+            shape={(props: PieSectorShapeProps) => (
+              <Sector
+                {...props}
+                fill={(props as any).fill}
+              />
+            )}
+          />
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
+    </>
   );
 }
 
@@ -194,34 +211,43 @@ function ResponseRate({
   ];
 
   return (
-    <ResponsiveContainer
-      width="100%"
-      height={220}
-    >
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          innerRadius={50}
-          outerRadius={90}
-          paddingAngle={3}
-          shape={(props: PieSectorShapeProps) => (
-            <Sector
-              {...props}
-              fill={(props as any).fill}
-            />
-          )}
-        />
-        <Tooltip
-          formatter={(v, n) => [
-            `${v} (${total ? Math.round((Number(v) / total) * 100) : 0}%)`,
-            n,
-          ]}
-        />
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>
+    <>
+      {!total ? (
+        <div style={{ textAlign: 'center', fontSize: '16px' }}>
+          No Response Yet.
+        </div>
+      ) : (
+        <></>
+      )}
+      <ResponsiveContainer
+        width="100%"
+        height={220}
+      >
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={50}
+            outerRadius={90}
+            paddingAngle={3}
+            shape={(props: PieSectorShapeProps) => (
+              <Sector
+                {...props}
+                fill={(props as any).fill}
+              />
+            )}
+          />
+          <Tooltip
+            formatter={(v, n) => [
+              `${v} (${total ? Math.round((Number(v) / total) * 100) : 0}%)`,
+              n,
+            ]}
+          />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
+    </>
   );
 }
 

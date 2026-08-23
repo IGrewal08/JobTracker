@@ -1,5 +1,10 @@
-export const API_BASE = 'http://localhost:3000';
+const isServer = typeof window === 'undefined';
 
+export const API_BASE =
+  import.meta.env.VITE_API_BASE ||
+  (isServer ? process.env.VITE_API_BASE || 'http://api:3000' : '');
+
+console.log(API_BASE);
 export async function authFetch<T = any>(
   path: string,
   token: string,

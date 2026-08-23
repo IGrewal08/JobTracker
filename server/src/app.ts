@@ -21,15 +21,15 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
-  //console.log(req);
-  //console.log(req.body);
-  next();
-});
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/applications', applicationRouter);
 app.use('/api/jobs', jobRouter);
 app.use('/api/preferences', preferencesRouter);
+
+app.use((req, res, next) => {
+  console.log(req);
+  next();
+});
 
 app.use(errorHandler);

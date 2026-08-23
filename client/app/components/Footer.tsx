@@ -5,10 +5,11 @@ export default function Footer() {
   return (
     <footer id={styles.footer}>
       <Link
-        to="/"
+        to="https://github.com/IGrewal08"
         id={styles.github}
       >
-        _{'\u00A9'}GitHub
+        IGrewal08
+        {'\u00A9'}GitHub
       </Link>
       <div>&copy; 2026</div>
     </footer>

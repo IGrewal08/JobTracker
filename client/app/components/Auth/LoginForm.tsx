@@ -10,7 +10,6 @@ export function LoginForm() {
     <main>
       <h1 className={styles.title}>JobTracker</h1>
       <div className={styles.content}>
-        <div id={styles.graphic}></div>
         <div id={styles.login_form}>
           <h5 style={{ color: 'var(--kanban-remove-hover)' }}>
             {actionData?.error && <p>{actionData.error}</p>}

@@ -78,17 +78,6 @@ export const applicationController = {
       if (!userId) return res.status(401).json({ message: 'Unauthorized.' });
 
       const { status, jobId, appliedAt, interviewAt, offerAmount } = req.body;
-      console.log(
-        status +
-          ' ' +
-          jobId +
-          ' ' +
-          appliedAt +
-          '  ' +
-          interviewAt +
-          ' ' +
-          offerAmount,
-      );
       if (!jobId)
         return res.status(400).json({ message: 'jobId is required.' });
 

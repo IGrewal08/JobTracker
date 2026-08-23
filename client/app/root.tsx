@@ -1,5 +1,11 @@
-import { Links, Meta, Outlet, Scripts } from 'react-router';
+import { Links, Meta, Outlet, Scripts, type LinksFunction } from 'react-router';
 import { ThemeProvider } from './context/ThemeContext';
+import './styles/Global.css';
+import globalStylesUrl from './styles/Global.css?url';
+
+export const links: LinksFunction = () => [
+  { rel: 'stylesheet', href: globalStylesUrl },
+];
 
 export default function Root() {
   return (
@@ -11,15 +17,15 @@ export default function Root() {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-                            (function() {
-                                try {
-                                    var savedTheme = localStorage.getItem('theme');
-                                    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                                    var theme = savedTheme || (prefersDark ? 'dark' : 'light');
-                                    document.documentElement.setAttribute('data-theme', theme);
-                                } catch (e) {}
-                            })();
-                        `,
+              (function() {
+                  try {
+                      var savedTheme = localStorage.getItem('theme');
+                      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                      var theme = savedTheme || (prefersDark ? 'dark' : 'light');
+                      document.documentElement.setAttribute('data-theme', theme);
+                  } catch (e) {}
+              })();
+            `,
           }}
         />
         <meta charSet="utf-8" />
@@ -28,10 +34,6 @@ export default function Root() {
           content="width=device-width, initial-scale=1"
         />
         <Meta />
-        <link
-          rel="stylesheet"
-          href="app/styles/Body.module.css"
-        />
         <link
           rel="icon"
           href="data:,"

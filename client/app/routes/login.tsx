@@ -12,7 +12,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const token = getTokenFromRequest(request);
   const url = new URL(request.url);
   const reason = url.searchParams.get('reason');
-  console.log(reason);
   if (reason && typeof window !== 'undefined') {
     window.alert('Session Expired');
   }

@@ -40,7 +40,7 @@
   padding: 0.85rem;
   min-width: 280px;
   flex: 1;
-  min-height: 12rem;
+  min-height: 14rem;
 }
 
 .columnHeader {
@@ -87,6 +87,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  max-height: 12rem;
+  overflow-y: scroll;
 }
 
 .card {

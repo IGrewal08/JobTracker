@@ -10,6 +10,7 @@ export function RegisterForm() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  console.log(API_BASE);
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -98,7 +99,6 @@ export function RegisterForm() {
             </NavLink>
           </h5>
         </div>
-        <div id={styles.graphic}></div>
       </div>
     </main>
   );

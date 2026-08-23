@@ -2,7 +2,7 @@ import type { NextFunction, Response } from 'express';
 import { jobServices, parseType } from '../services/job.services.js';
 import { JobType } from '@prisma/client';
 import type { AuthReq } from '../middleware/auth.js';
-import { prisma } from '@/config/prisma.js';
+import { prisma } from '../config/prisma.js';
 
 export const jobController = {
   getById: async (

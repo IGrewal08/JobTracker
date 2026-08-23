@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
 });
 
 const PORT = Number(process.env.PORT) || 3000;
-httpServer.listen(PORT, 'localhost', async () => {
+httpServer.listen(PORT, '0.0.0.0', async () => {
   await initQueue();
   console.log(`Server running on port ${PORT}`);
 });
