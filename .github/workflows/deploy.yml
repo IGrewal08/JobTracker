@@ -1,0 +1,55 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            server/package-lock.json
+            client/package-lock.json
+
+      - name: Type check server
+        working-directory: server
+        runs: |
+          npm ci
+          npx tsc --noEmit
+
+      - name: Type check client
+        working-directory: client
+        run: |
+          npm ci
+          npx tsc --noEmit
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_APP_DIR }}
+          script: |
+            cd ${{ secrets.EC2_APP_DIR }}
+
+            # Pull latest code
+            git pull origin main
+
+            # Rebuild and restart containers with zero downtime
+            docker compose pull
+            docker compose up --build -d
+
+            # Remove unused images to free disk space
+            docker image prune -f
+
+            # Confirm all containers are running
+            docker compose ps
