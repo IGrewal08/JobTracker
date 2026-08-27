@@ -45,8 +45,7 @@ export default function Header({ name }: User) {
         style={{
           ...(location.pathname.slice(1) === 'settings' && {
             color: '#F4F3EF',
-            background:
-              'linear-gradient(90deg,rgba(31, 74, 48, 1) 0%, rgba(244, 243, 239, 1) 90%)',
+            background: 'linear-gradient(90deg, #1F4A30 0%, #F4F3EF 90%)',
           }),
         }}
       >

@@ -1,16 +1,17 @@
 const isServer = typeof window === 'undefined';
+const SERVER_API_BASE = process.env.VITE_API_BASE || 'http://api:3000';
+const CLIENT_API_BASE = import.meta.env.VITE_API_BASE || '';
 
-export const API_BASE =
-  import.meta.env.VITE_API_BASE ||
-  (isServer ? process.env.VITE_API_BASE || 'http://api:3000' : '');
+export const API_BASE = isServer ? SERVER_API_BASE : CLIENT_API_BASE;
 
-console.log(API_BASE);
 export async function authFetch<T = any>(
   path: string,
   token: string,
   options: RequestInit = {},
 ): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  const url = `${API_BASE}${path}`;
+
+  const res = await fetch(url, {
     ...options,
     headers: {
       'Content-Type': 'application/json',

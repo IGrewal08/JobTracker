@@ -2,7 +2,7 @@
   --background-color-theme: #ffffff;
   --secondary-color-theme: #1f4a30;
   --component-color-theme: #f4f3ef;
-  --auth-form-color: rgba(244, 243, 239, 0.75);
+  --auth-form-color: rgba(244, 243, 239, 0.589);
   --header-divider-color: #979797;
   --title-color-theme: #1a1a18;
   --kanban-details-color: #7a7972;
@@ -22,7 +22,7 @@
   --background-color-theme: #121212;
   --secondary-color-theme: #243a2d;
   --component-color-theme: #1e1e1e;
-  --auth-form-color: rgba(30, 30, 30, 0.7);
+  --auth-form-color: rgba(30, 30, 30, 0.589);
   --header-divider-color: #979797;
   --title-color-theme: #1a1a18;
   --kanban-details-color: #7a7972;
@@ -70,7 +70,7 @@ body {
   background-color: var(--secondary-color-theme);
 }
 
-:global [data-theme='dark'] .toggleThumb {
+[data-theme='dark'] .toggleThumb {
   transform: translateX(4rem);
 }
 

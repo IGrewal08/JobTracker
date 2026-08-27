@@ -27,9 +27,4 @@ app.use('/api/applications', applicationRouter);
 app.use('/api/jobs', jobRouter);
 app.use('/api/preferences', preferencesRouter);
 
-app.use((req, res, next) => {
-  console.log(req);
-  next();
-});
-
 app.use(errorHandler);
