@@ -22,7 +22,7 @@ jobs:
 
       - name: Type check server
         working-directory: server
-        runs: |
+        run: |
           npm ci
           npx tsc --noEmit
 

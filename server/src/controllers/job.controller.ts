@@ -110,11 +110,13 @@ export const jobController = {
         prisma.job.findMany({ select: { tags: true } }),
       ]);
 
-      const companies = companiesRaw.map((j) => j.company);
+      const companies = companiesRaw.map((j: { company: string }) => j.company);
       const locations = locationsRaw
-        .map((j) => j.location)
+        .map((j: { location: string | null }) => j.location)
         .filter(Boolean) as string[];
-      const tags = [...new Set(tagsRaw.flatMap((j) => j.tags))];
+      const tags = [
+        ...new Set(tagsRaw.flatMap((j: { tags: string[] }) => j.tags)),
+      ];
 
       return res.status(200).json({ companies, locations, tags });
     } catch (err) {
