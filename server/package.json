@@ -25,6 +25,7 @@
     "bullmq": "^5.79.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
+    "cron-parser": "^5.10.0",
     "dotenv": "^17.4.2",
     "env": "^0.0.2",
     "express": "^5.2.1",

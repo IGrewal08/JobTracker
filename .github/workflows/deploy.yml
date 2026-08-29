@@ -22,8 +22,11 @@ jobs:
 
       - name: Type check server
         working-directory: server
+        env:
+          DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
         run: |
           npm ci
+          npx prisma generate
           npx tsc --noEmit
 
       - name: Type check client
