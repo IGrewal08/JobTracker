@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     name: Build and deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
@@ -35,24 +35,15 @@ jobs:
           npm ci
           npx tsc --noEmit
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd ${{ secrets.EC2_APP_DIR }}
+      - name: Deploy
+        run: |
+          cd ~/JobTracker
 
-            # Pull latest code
-            git pull origin main
-
-            # Rebuild and restart containers with zero downtime
-            docker compose pull
-            docker compose up --build -d
-
-            # Remove unused images to free disk space
-            docker image prune -f
-
-            # Confirm all containers are running
-            docker compose ps
+          # Pull latest code
+          git pull origin main
+          # Rebuild and restart container with zero downtime
+          docker compose up --build -d
+          # Remove unused images to free disk space
+          docker image prune -f
+          # Confirm all container are running
+          docker compose ps
