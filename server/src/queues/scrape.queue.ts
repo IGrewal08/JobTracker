@@ -11,7 +11,7 @@ export async function initQueue() {
   await jobQueue.upsertJobScheduler(
     'daily-trigger',
     {
-      pattern: '0 0 0 * * * ',
+      pattern: '0 0 0 * * *',
     },
     {
       name: 'daily-trigger',
